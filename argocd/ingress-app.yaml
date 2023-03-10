@@ -50,3 +50,25 @@ spec:
               number: 80
         path: /
         pathType: Prefix
+        
+  - host: app1.virtapp.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: varnish-svc
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+
+  - host: app2.virtapp.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: varnish-svc
+            port:
+              number: 80
+        path: /
+        pathType: Prefix 
