@@ -7,7 +7,8 @@ Kubernetes in Docker with Terraform
 
 🎯 About
 
-This project is a simple example of how to use Terraform to create a Kubernetes cluster in Docker using Kind.
+Varnish is a powerful, feature-rich web cache and HTTP accelerator, solving all kinds of challenges related to video streaming, CDN and website acceleration. Our software offers unmatched performance, robustness and flexibility for staying competitive at scale.
+
 🚀 Technologies
 
 The following tools were used in this project:
