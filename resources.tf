@@ -1,19 +1,4 @@
 
-###-keycloak
-resource "helm_release" "keycloak" {
-  name       = "keycloak"
-
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "keycloak"
-  create_namespace = true
-  timeout = 900
-  values = [
-    file("config/keycloak-value.yaml")
-  ]
-  depends_on = [helm_release.argocd]
-}
-
-
 ###-kong
 resource "helm_release" "kong" {
   name       = "kong"
