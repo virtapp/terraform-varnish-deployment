@@ -29,11 +29,11 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: postgresql-ha
+  name: varnish
   namespace: argocd
 spec:
   destination:
-    namespace: infra
+    namespace: default
     server: https://kubernetes.default.svc
   project: default
   source:
