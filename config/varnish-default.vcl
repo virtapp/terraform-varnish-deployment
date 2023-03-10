@@ -6,13 +6,13 @@ import std;
 
 backend site1 {
         .host = "httpd-server";
-        .port = "80";
+        .port = "8080";
 
 }
 
 backend site2 {
         .host = "httpd-server";
-        .port = "80";
+        .port = "8080";
 }
 
 sub vcl_recv {
