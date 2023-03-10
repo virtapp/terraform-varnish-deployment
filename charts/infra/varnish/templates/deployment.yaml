@@ -1,61 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "varnish.fullname" . }}
-  labels:
-    {{- include "varnish.labels" . | nindent 4 }}
+  name: varnish-proxy
+  namespace: default
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: 2
   selector:
     matchLabels:
-      {{- include "varnish.selectorLabels" . | nindent 6 }}
+      app: varnish-proxy
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      name: varnish-proxy
       labels:
-        {{- include "varnish.selectorLabels" . | nindent 8 }}
+        app: varnish-proxy
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "varnish.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: varnish-config
+          configMap:
+            name: varnish-vcl
+            items:
+              - key: default.vcl
+                path: default.vcl
+        - name: varnish-secret
+          secret:
+            secretName: varnish-secret
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      - name: varnish
+        image: dkruyt/varnish:alpine
+        imagePullPolicy: Always
+        env:
+        - name: CACHE_SIZE
+          value: 128m
+        - name: VCL_CONFIG
+          value: /etc/varnish/configmap/default.vcl
+        - name: SECRET_FILE
+          value: /etc/varnish/k8s-secret/secret
+        volumeMounts:
+          - name: varnish-config
+            mountPath: /etc/varnish/configmap
+          - name: varnish-secret
+            mountPath: /etc/varnish/k8s-secret
+        ports:
+        - containerPort: 80
