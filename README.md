@@ -1,4 +1,4 @@
-![image](https://user-images.githubusercontent.com/23049337/221376202-40474f94-3a65-4f9f-b8e3-85dabef15e67.png)
+![image](https://user-images.githubusercontent.com/23049337/224354088-68e03084-813a-49dd-bf2c-adb6bd912fd3.png)
 
  
 Kubernetes in Docker with Terraform
