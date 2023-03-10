@@ -20,5 +20,7 @@ spec:
     repoURL: https://github.com/virtapp/local-deployment.git
     targetRevision: HEAD
   syncPolicy:
-    automated: {}
+    automated:
+      prune: true
+      selfHeal: true
 
