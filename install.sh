@@ -62,7 +62,7 @@ sleep 5 &&
 kubectl create secret generic varnish-secret --from-literal=secret=$(head -c32 /dev/urandom  | base64)
 kubectl create configmap varnish-vcl --from-file=config/default.vcl || true
 kubectl apply -f ./${path_folder}/app-infra.yaml
-kubectl apply -f ./${path_folder}/app-httpd.yaml
+kubectl apply -f ./${path_folder}/app-apache.yaml
                   printf "\nWaiting for application will be ready... \n"
 printf "\nYou should see 'dashboard' as a reponse below (if you do the ingress is working):\n"
 
