@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
     ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/session-cookie-name: "keycloak"
+    nginx.ingress.kubernetes.io/session-cookie-name: "app"
     nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "300s"
@@ -32,7 +32,6 @@ spec:
         path: /
         pathType: Prefix
 
-        
   - host: app1.virtapp.io
     http:
       paths:
