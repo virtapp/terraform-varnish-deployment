@@ -5,13 +5,13 @@ import std;
 
 
 backend app1 {
-        .host = "httpd-server";
+        .host = "apache-default-app1";
         .port = "8080";
 
 }
 
 backend app2 {
-        .host = "httpd-server";
+        .host = "apache-default-app2";
         .port = "8080";
 }
 
