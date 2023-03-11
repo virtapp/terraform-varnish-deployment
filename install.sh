@@ -56,13 +56,14 @@ done  2>/dev/null
 
              echo      "----- ............................. -----"
              echo         "---  LOAD-ARGO-APPLICATIONS  ---"
-             echo      "----- ............................. -----"      
+             echo      "----- ............................. -----"         
              
 sleep 5 &&
 kubectl create secret generic varnish-secret --from-literal=secret=$(head -c32 /dev/urandom  | base64)
+kubectl create configmap varnish-vcl --from-file=config/default.vcl || true
 kubectl apply -f ./${path_folder}/app-infra.yaml
 kubectl apply -f ./${path_folder}/app-httpd.yaml
-               printf "\nWaiting for application will be ready... \n"
+                  printf "\nWaiting for application will be ready... \n"
 printf "\nYou should see 'dashboard' as a reponse below (if you do the ingress is working):\n"
 
              echo      "----- ............................. -----"
@@ -74,7 +75,6 @@ kubectl apply -f ./${path_folder}/ingress-app.yaml || true
 kubectl apply -f ./${path_folder}/ingress-argocd.yaml   || true
 sleep 5 && kubectl get nodes -o wide && sleep 5
 terraform providers && kubectl get ing -A
-
 
              echo      "----- ............................. -----"
              echo           "---  CLUSTER IS READY  ---"
